@@ -7,18 +7,24 @@ import { ViewUpdateResult, applyViewUpdate } from "../src/services/payout.servic
 
 jest.setTimeout(60_000);
 
-let replSet: MongoMemoryReplSet;
+const TEST_URI = process.env.TEST_MONGODB_URI;
+let replSet: MongoMemoryReplSet | undefined;
 
 beforeAll(async () => {
-  // A replica set is required for multi-document transactions
-  replSet = await MongoMemoryReplSet.create({ replSet: { count: 1 } });
-  await mongoose.connect(replSet.getUri());
+  if (TEST_URI) {
+    // Separate database so the tests never touch real data
+    await mongoose.connect(TEST_URI, { dbName: "memed_test" });
+  } else {
+    // A replica set is required for multi-document transactions
+    replSet = await MongoMemoryReplSet.create({ replSet: { count: 1 } });
+    await mongoose.connect(replSet.getUri());
+  }
   await Promise.all([Campaign.init(), Submission.init()]);
 }, 180_000);
 
 afterAll(async () => {
   await mongoose.disconnect();
-  await replSet.stop();
+  await replSet?.stop();
 });
 
 beforeEach(async () => {
