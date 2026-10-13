@@ -17,7 +17,7 @@ A creator marketplace where brands run campaigns with a milestone payout ladder,
 
 | Role | Email | Password |
 |---|---|---|
-| Brand | brand@wlld.com | brand@123 |
+| Brand | brand@wlld.com | brand123 |
 | Creator | creator@wlld.com | creator@123 |
 
 You can also create new accounts on the signup page.
