@@ -104,4 +104,9 @@ describe("calculatePayout - validation", () => {
   it("rejects negative views", () => {
     expect(() => calculatePayout({ ...base, views: -1 })).toThrow();
   });
+
+  it("rejects non-finite views", () => {
+    expect(() => calculatePayout({ ...base, views: NaN })).toThrow();
+    expect(() => calculatePayout({ ...base, views: Infinity })).toThrow();
+  });
 });
