@@ -47,7 +47,7 @@ export async function applyViewUpdate(
             },
           },
           { $inc: { spentBudget: payout.increment } },
-          { new: true, session }
+          { returnDocument: "after", session }
         );
 
         if (!updatedCampaign) {
@@ -60,7 +60,7 @@ export async function applyViewUpdate(
       const updatedSubmission = await Submission.findOneAndUpdate(
         { _id: submission._id, currentPayout: submission.currentPayout },
         { $set: { views: newViews, currentPayout: payout.newPayout } },
-        { new: true, session }
+        { returnDocument: "after", session }
       );
 
       if (!updatedSubmission) {
