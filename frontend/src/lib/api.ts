@@ -8,6 +8,13 @@ import {
   User,
 } from "@/types";
 
+export interface UpdateViewsResponse {
+  submission: Submission;
+  payoutAdded: number;
+  budgetCapped: boolean;
+  campaignRemainingBudget: number;
+}
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 const TOKEN_KEY = "memed_token";
 
@@ -86,4 +93,10 @@ export const api = {
     }),
 
   getMySubmissions: () => request<MySubmissionsResponse>("/submissions/mine"),
+
+  updateViews: (submissionId: string, views: number) =>
+    request<UpdateViewsResponse>(`/submissions/${submissionId}/views`, {
+      method: "PATCH",
+      body: { views },
+    }),
 };

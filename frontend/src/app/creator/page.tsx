@@ -88,7 +88,7 @@ function CreatorDashboard() {
       {submissions.length === 0 ? (
         <p className="muted">You haven&apos;t submitted any posts yet.</p>
       ) : (
-        submissions.map((s) => <SubmissionCard key={s.id} submission={s} />)
+        submissions.map((s) => <SubmissionCard key={s.id} submission={s} onUpdated={refresh} />)
       )}
 
       <h2>Live campaigns</h2>
